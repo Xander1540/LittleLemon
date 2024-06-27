@@ -39,7 +39,7 @@ fun UpperPanel(){
         Text(
             text = stringResource(id = R.string.title), fontSize = 32.sp,
             color = Color(0xFFE9DC48),
-            modifier = Modifier.padding(start = 20.dp, top = 20.dp)
+            modifier = Modifier.padding(start = 20.dp, top = 45.dp)
         )
         Text(
             text = stringResource(id = R.string.chicago), fontSize = 24.sp,
