@@ -1,13 +1,17 @@
 package com.example.littlelemonexcercise
 
-
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,17 +22,26 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     private fun HomeScreen() {
-        Scaffold(
-            topBar = {
-                TopAppBar()
+
+        val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+        val scope = rememberCoroutineScope()
+
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                DrawerPanel(drawerState = drawerState, scope = scope)
             }
         ) {
-            Column {
+            Scaffold(
+                topBar = {
+                    TopAppBar(drawerState = drawerState, scope = scope)
+                }
+            ) { paddingValues ->Column(modifier = Modifier.padding(paddingValues)) {
                 UpperPanel()
                 LowerPanel()
+            }
             }
         }
     }
@@ -38,7 +51,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun AppScreen(){
-        var count by rememberSaveable{
+        var count by rememberSavable{
             mutableStateOf(0)
         }
 
